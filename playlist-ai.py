@@ -4,12 +4,8 @@ from openai import OpenAI
 import json
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-import streamlit as st
-import os
-import datetime as dt
 
 def get_token(oauth, code):
-
     token = oauth.get_access_token(code, as_dict=False, check_cache=False)
     # remove cached token saved in directory
     os.remove(".cache")
@@ -41,37 +37,6 @@ def sign_in(token, oauth):
 #     return limit
 
 
-# ### in the end, this endpoint is simply broken
-# ### cannot do anything until Spotify fixes it
-# def get_recents_all(since):
-    
-#     # for some reason, you have to move backwards instead of forward
-#     # the after header seems pointless because it still starts at current time
-#     # but the next() method returns a results object with no 'next' dict element?
-    
-#     now = int(time.mktime(dt.datetime.now().timetuple())) * 1000
-#     start = now
-    
-#     tracks = []
-#     while (start > since):
-#         results = sp.current_user_recently_played(before=start, limit=50)
-#         try:
-#             next_stop = int(results["cursors"]["before"])
-#         except:
-#             next_stop = since
-#         # eventually, the next stop will move past the desired since timestamp
-#         if next_stop < since:
-#             last_limit = get_correct_limit(since, start)
-#             if last_limit != 0:
-#                 results = sp.current_user_recently_played(before=start,
-#                                                           limit=last_limit)
-#             else:
-#                 break
-#         tracks.extend(results["items"])
-#         start = next_stop
-#     return tracks
-
-
 def app_get_token():
     try:
         token = get_token(st.session_state["oauth"], st.session_state["code"])
@@ -96,7 +61,6 @@ def app_sign_in():
         st.session_state["signed_in"] = True
         app_display_welcome()
         # st.success("Sign in success!")
-        
     return sp
 
 
@@ -172,6 +136,8 @@ def generate_playlist(output, user):
     
     playlist = sp.user_playlist_create(user["id"], output["playlist_name"], public=True, collaborative=False, description=output["description"])
     sp.playlist_add_items(playlist["id"], track_ids)
+    for x in track_ids:
+        st.image(track(x)["album"]["images"]["url"], width=300)
     return playlist
 
    
