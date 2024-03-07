@@ -156,6 +156,7 @@ if "oauth" not in st.session_state:
 
 # get current url (stored as dict)
 url_params = st.query_params
+sp = ""
 # attempt sign in with cached token
 if st.session_state["cached_token"] != "":
     sp = app_sign_in()
