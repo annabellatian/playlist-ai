@@ -69,7 +69,7 @@ def app_display_welcome():
     # import secrets from streamlit deployment
     cid = st.secrets["SPOTIPY_CLIENT_ID"]
     csecret = st.secrets["SPOTIPY_CLIENT_SECRET"]
-    uri = st.secrets["SPOTIPY_REDIRECT_URI"]
+    uri = "https://www.google.com"
 
     # set scope and establish connection
     scopes = " ".join(["user-read-private",
