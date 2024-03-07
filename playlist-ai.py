@@ -163,24 +163,24 @@ if st.session_state["cached_token"] != "":
 elif "code" in url_params:
     # all params stored as lists, see doc for explanation
     st.session_state["code"] = url_params["code"][0]
-    app_get_token()
-    # cid = st.secrets["SPOTIPY_CLIENT_ID"]
-    # csecret = st.secrets["SPOTIPY_CLIENT_SECRET"]
-    # uri = st.secrets["SPOTIPY_REDIRECT_URI"]
+    # app_get_token()
+    cid = st.secrets["SPOTIPY_CLIENT_ID"]
+    csecret = st.secrets["SPOTIPY_CLIENT_SECRET"]
+    uri = st.secrets["SPOTIPY_REDIRECT_URI"]
 
-    # # set scope and establish connection
-    # scopes = " ".join(["user-read-private",
-    #                    "user-read-email",
-    #                    "playlist-read-private",
-    #                    "playlist-modify-private",
-    #                    "playlist-modify-public",
-    #                    "user-read-recently-played"])
+    # set scope and establish connection
+    scopes = " ".join(["user-read-private",
+                       "user-read-email",
+                       "playlist-read-private",
+                       "playlist-modify-private",
+                       "playlist-modify-public",
+                       "user-read-recently-played"])
 
-    # oauth = SpotifyOAuth(scope=scopes,
-    #                      redirect_uri=uri,
-    #                      client_id=cid,
-    #                      client_secret=csecret)
-    # st.session_state["oauth"] = oauth
+    oauth = SpotifyOAuth(scope=scopes,
+                         redirect_uri=uri,
+                         client_id=cid,
+                         client_secret=csecret)
+    st.session_state["oauth"] = oauth
     sp = app_sign_in()
 
 # otherwise, prompt for redirect
