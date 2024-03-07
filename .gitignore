@@ -1,0 +1,6 @@
+/.streamlit/secrets.toml
+.streamlit/secrets.toml
+secrets.toml
+*.toml
+*.cache
+.cache
